@@ -10,20 +10,10 @@ db.on('connected', function() {
     console.log('Connection to MongoDB established.')
 });
 
-Mongoose.connect(uri)
+Mongoose.Promise = global.Promise
 
-var geoJsonModel = new Mongoose.Schema({ 
-    geometry: {
-        coordinates: {
-            latitude: Number,
-            longitude: Number,
-        }
-    },
-    properties: {
-        name: String,
-        description: String
-    }
+/* Mongoose.connect(uri) */
+module.exports = Mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
-
-let Coords = Mongoose.model('dados', geoJsonModel);
-module.exports = Coords
